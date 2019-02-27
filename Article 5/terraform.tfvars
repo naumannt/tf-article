@@ -1,0 +1,8 @@
+aws_region              =   "placeholder"
+aws_access_key          =   "placeholder"
+aws_secret_key          =   "placeholder"
+subnet_count            =   "placeholder"
+accessing_computer_ip   =   "placeholder"
+keypair-name            =   "placeholder"
+hosted_zone_id          =   "placeholder"
+hosted_zone_url         =   "placeholder.io"
