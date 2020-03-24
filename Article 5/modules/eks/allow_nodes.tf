@@ -29,5 +29,5 @@ resource "kubernetes_config_map" "aws_auth" {
 EOF
   }
   depends_on = [
-    "aws_eks_cluster.tf_eks"  ] 
+    "aws_eks_cluster.tf_eks,"aws_autoscaling_group.tf_eks""  ] 
 }
