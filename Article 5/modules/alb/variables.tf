@@ -13,7 +13,7 @@ variable "hosted_zone_url" {
 
 
 variable "gateway_subnet_ids" {
-  type = "string"
+  type = "list"
   description = "List containing the IDs of all created gateway subnets."
 }
 

@@ -17,5 +17,9 @@ variable "keypair-name" {
 }
 
 variable "app_subnet_ids" {
+  type = "list"
+}
+
+variable "cluster_version" {
   type = "string"
 }

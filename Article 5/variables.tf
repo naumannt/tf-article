@@ -2,10 +2,12 @@ variable "aws_region" {
  type = "string"
  description = "Used AWS Region."
 }
+
 variable "aws_access_key" {
  type = "string"
  description = "The account identification key used by your Terraform client."
 }
+
 variable "aws_secret_key" {
  type = "string"
  description = "The secret key used by your terraform client to access AWS."
@@ -34,4 +36,8 @@ variable "hosted_zone_id" {
 variable "hosted_zone_url" {
   type = "string"
   description = "URL of the hosted Zone created in Route53 before Terraform deployment."
+}
+
+variable "cluster_version" {
+  type = "string"
 }
