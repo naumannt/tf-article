@@ -1,9 +1,9 @@
 resource "aws_alb" "eks-alb" {
   name            = "eks-alb"
-  subnets         = ["${var.gateway_subnet_ids}"]
+  subnets         =  flatten(["${var.gateway_subnet_ids}"])
   security_groups = ["${var.node_sg_id}", "${aws_security_group.eks-alb.id}"]
   ip_address_type = "ipv4"
-  
+
   tags = "${
     map(
      "Name", "eks-alb",
@@ -28,7 +28,7 @@ resource "aws_alb_listener" "eks-alb" {
 
 resource "aws_alb_listener" "eks-alb-ssl" {
   load_balancer_arn = "${aws_alb.eks-alb.arn}"
-  port              = 443
+  port             = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
   certificate_arn   = "${data.aws_acm_certificate.example.arn}"

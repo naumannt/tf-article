@@ -15,7 +15,11 @@ module "eks" {
   keypair-name            = "${var.keypair-name}"
   // inputs from modules
   vpc_id                  = "${module.network.vpc_id}"
-  app_subnet_ids          = "${module.network.app_subnet_ids}"
+  app_subnet_ids = [
+      "${module.network.app_subnet_ids}",
+   ]
+  cluster_version         = "${var.cluster_version}"
+
 }
 
 module "alb" {
@@ -26,7 +30,9 @@ module "alb" {
   hosted_zone_url          = "${var.hosted_zone_url}"
   // inputs from modules
   vpc_id                  = "${module.network.vpc_id}"
-  gateway_subnet_ids      = "${module.network.gateway_subnet_ids}"
+  gateway_subnet_ids = [
+      "${module.network.gateway_subnet_ids}",
+   ]
   node_sg_id              = "${module.eks.node_sg_id}"
   lb_target_group_arn     = "${module.eks.target_group_arn}"
 }

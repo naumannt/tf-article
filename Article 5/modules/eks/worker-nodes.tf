@@ -5,7 +5,7 @@
 data "aws_ami" "eks-worker" {
   filter {
     name   = "name"
-    values = ["amazon-eks-node-v*"]
+    values = ["amazon-eks-node-${var.cluster_version}-v*"]
   }
 
   most_recent = true
@@ -24,7 +24,7 @@ locals {
   tf-eks-node-userdata = <<USERDATA
 #!/bin/bash
 set -o xtrace
-/etc/eks/bootstrap.sh --apiserver-endpoint '${aws_eks_cluster.tf_eks.endpoint}' --b64-cluster-ca '${aws_eks_cluster.tf_eks.certificate_authority.0.data}' 'example'
+/etc/eks/bootstrap.sh --apiserver-endpoint '${aws_eks_cluster.tf_eks.endpoint}' --b64-cluster-ca '${aws_eks_cluster.tf_eks.certificate_authority.0.data}' 'example-cluster'
 USERDATA
 }
 
@@ -57,9 +57,9 @@ resource "aws_autoscaling_group" "tf_eks" {
   max_size             = "3"
   min_size             = 1
   name                 = "terraform-tf-eks"
-  vpc_zone_identifier  = ["${var.app_subnet_ids}"]
+  vpc_zone_identifier = flatten(["${var.app_subnet_ids}"])
   target_group_arns    = ["${aws_lb_target_group.tf_eks.arn}"]
-  
+
   tag {
     key                 = "Name"
     value               = "terraform-tf-eks"
@@ -67,7 +67,7 @@ resource "aws_autoscaling_group" "tf_eks" {
   }
 
   tag {
-    key                 = "kubernetes.io/cluster/example"
+    key                 = "kubernetes.io/cluster/example-cluster"
     value               = "owned"
     propagate_at_launch = true
   }
